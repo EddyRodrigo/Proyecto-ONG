@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Principal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<h1>Bienvenido al sistema ONG</h1>
+<a href="{% url 'listar_voluntarios' %}">Voluntarios</a><br>
+<a href="{% url 'listar_eventos' %}">Eventos</a><br>
+<a href="{% url 'listar_inscritos' %}">Inscritos</a><br>
+<a href="{% url 'listar_asistencias' %}">Asistencias</a><br>
+
+</body>
+</html>
