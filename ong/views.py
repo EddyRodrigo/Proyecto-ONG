@@ -2,6 +2,35 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Voluntario, Inscrito, Evento, Asistencia
 from datetime import datetime
 
+from datetime import datetime
+from django.db import transaction
+
+def _compute_hours(start, end):
+    """
+    Devuelve las horas entre start y end como float.
+    start/end pueden ser objetos datetime o cadenas ISO (ej: '2025-01-15T09:00' o '2025-01-15 09:00:00').
+    """
+    if not start or not end:
+        return 0.0
+
+    # convertir strings a datetime si fuera necesario
+    if isinstance(start, str):
+        # soporta 'YYYY-MM-DDTHH:MM' (datetime-local) y 'YYYY-MM-DD HH:MM:SS'
+        try:
+            start = datetime.fromisoformat(start)
+        except ValueError:
+            start = datetime.strptime(start, "%Y-%m-%d %H:%M:%S")
+
+    if isinstance(end, str):
+        try:
+            end = datetime.fromisoformat(end)
+        except ValueError:
+            end = datetime.strptime(end, "%Y-%m-%d %H:%M:%S")
+
+    delta = end - start
+    hours = delta.total_seconds() / 3600.0
+    # si quieres entero redondeado al más cercano:
+    return hours
 
 
 
@@ -148,13 +177,29 @@ def listar_asistencias(request):
 
 def guardar_asistencia(request):
     if request.method == 'POST':
-        Asistencia.objects.create(
-            evento_id=request.POST['evento'],
-            voluntario_id=request.POST['voluntario'] if request.POST['voluntario'] else None,
-            inscrito_id=request.POST['inscrito'] if request.POST['inscrito'] else None,
-            hora_llegada=request.POST['hora_llegada'],
-            hora_salida=request.POST['hora_salida']
-        )
+        evento_id = request.POST.get('evento')
+        voluntario_id = request.POST.get('voluntario') or None
+        inscrito_id = request.POST.get('inscrito') or None
+        hora_llegada = request.POST.get('hora_llegada')
+        hora_salida = request.POST.get('hora_salida')
+
+        with transaction.atomic():
+            asistencia = Asistencia.objects.create(
+                evento_id=evento_id,
+                voluntario_id=voluntario_id,
+                inscrito_id=inscrito_id,
+                hora_llegada=hora_llegada,
+                hora_salida=hora_salida
+            )
+
+            # si tiene voluntario, sumar sus horas
+            if asistencia.voluntario:
+                horas = _compute_hours(asistencia.hora_llegada, asistencia.hora_salida)
+                # decide si quieres guardar decimales o enteros:
+                # si tu modelo es IntegerField:
+                asistencia.voluntario.horas_acumuladas = int(round(asistencia.voluntario.horas_acumuladas + horas))
+                asistencia.voluntario.save()
+
         return redirect('listar_asistencias')
 
     eventos = Evento.objects.all()
@@ -168,18 +213,50 @@ def guardar_asistencia(request):
     })
 
 
+
 def actualizar_asistencia(request, id_asistencia):
     asistencia = get_object_or_404(Asistencia, id_asistencia=id_asistencia)
 
+    # Guardamos estado previo (antes de modificar)
+    prev_vol = asistencia.voluntario
+    prev_lleg = asistencia.hora_llegada
+    prev_sali = asistencia.hora_salida
+
     if request.method == 'POST':
-        asistencia.evento_id = request.POST['evento']
-        asistencia.voluntario_id = request.POST['voluntario'] or None
-        asistencia.inscrito_id = request.POST['inscrito'] or None
-        asistencia.hora_llegada = request.POST['hora_llegada']
-        asistencia.hora_salida = request.POST['hora_salida']
-        asistencia.save()
+        # Nuevos valores del formulario
+        new_evento = request.POST.get('evento')
+        new_voluntario = request.POST.get('voluntario') or None
+        new_inscrito = request.POST.get('inscrito') or None
+        new_llegada = request.POST.get('hora_llegada')
+        new_salida = request.POST.get('hora_salida')
+
+        with transaction.atomic():
+
+            # Primero revertimos horas anteriores si había voluntario
+            if prev_vol:
+                horas_previas = _compute_hours(prev_lleg, prev_sali)
+                prev_vol.horas_acumuladas = int(round(prev_vol.horas_acumuladas - horas_previas))
+                if prev_vol.horas_acumuladas < 0:
+                    prev_vol.horas_acumuladas = 0
+                prev_vol.save()
+
+            # Actualizamos asistencia
+            asistencia.evento_id = new_evento
+            asistencia.voluntario_id = new_voluntario
+            asistencia.inscrito_id = new_inscrito
+            asistencia.hora_llegada = new_llegada
+            asistencia.hora_salida = new_salida
+            asistencia.save()
+
+            # Ahora sumamos horas nuevas al nuevo voluntario
+            if asistencia.voluntario:
+                horas_nuevas = _compute_hours(asistencia.hora_llegada, asistencia.hora_salida)
+                asistencia.voluntario.horas_acumuladas = int(round(asistencia.voluntario.horas_acumuladas + horas_nuevas))
+                asistencia.voluntario.save()
+
         return redirect('listar_asistencias')
 
+    # Datos para el formulario
     eventos = Evento.objects.all()
     voluntarios = Voluntario.objects.all()
     inscritos = Inscrito.objects.all()
@@ -192,8 +269,19 @@ def actualizar_asistencia(request, id_asistencia):
     })
 
 
+
 def eliminar_asistencia(request, id_asistencia):
     asistencia = get_object_or_404(Asistencia, id_asistencia=id_asistencia)
+
+    # Si tenía voluntario, restar horas antes de eliminar
+    if asistencia.voluntario:
+        horas_previas = _compute_hours(asistencia.hora_llegada, asistencia.hora_salida)
+        asistencia.voluntario.horas_acumuladas -= int(round(horas_previas))
+        if asistencia.voluntario.horas_acumuladas < 0:
+            asistencia.voluntario.horas_acumuladas = 0
+        asistencia.voluntario.save()
+
     asistencia.delete()
     return redirect('listar_asistencias')
+
 
