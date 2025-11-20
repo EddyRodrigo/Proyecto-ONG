@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+/*TODO: maquetacion*/
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    gap: 8px;
+}
+    
+.div1 {
+    grid-column: span 3 / span 3;
+}
+
+.div2 {
+    grid-column: span 3 / span 3;
+    grid-column-start: 4;
+    grid-row-start: 1;
+}
+.div3 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.div4 {
+    grid-column: span 6 / span 6;
+    grid-row: span 3 / span 3;
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+
+.div5 {
+    grid-column: span 6 / span 6;
+    grid-row: span 3 / span 3;
+    grid-column-start: 1;
+    grid-row-start: 6;
+}
+
+.div6 {
+    grid-column: span 6 / span 6;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 9;
+}
+
+.div7 {
+    grid-column: span 6 / span 6;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 11;
+}
+/*TODO: Fin maquetacion*/
+
+header {
+    background: #000;
+    border-bottom: 3px solid #0ed5c8;
+    padding: 50px 0;
+    text-align: center;
+}
+
+header h1 {
+    color: #02e8c5;
+    font-size: 30px;
+    margin: 0;
+    letter-spacing: 2px;
+}
+nav {
+    background-color: #111;
+    border-bottom: 3px solid #00e5d4;
+    padding: 10px;
+    display: flex;
+    justify-content: center; 
+    gap: 15px;                
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #00e5d4;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size: 16px;
+    background: transparent;
+}
+nav a:hover {
+    background-color: #00e5d4;
+    color: #000;
+    transform: translateY(-3px);
+}
+
+
+
+
+        
+        
