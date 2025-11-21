@@ -3,7 +3,7 @@ from .models import Voluntario, Inscrito, Evento, Asistencia
 
 
 # -------------------------------
-# VOLUNTARIOS
+#* VOLUNTARIOS
 # -------------------------------
 @admin.register(Voluntario)
 class VoluntarioAdmin(admin.ModelAdmin):
@@ -14,7 +14,7 @@ class VoluntarioAdmin(admin.ModelAdmin):
 
 
 # -------------------------------
-# INSCRITOS
+#* INSCRITOS
 # -------------------------------
 @admin.register(Inscrito)
 class InscritoAdmin(admin.ModelAdmin):
@@ -24,7 +24,7 @@ class InscritoAdmin(admin.ModelAdmin):
 
 
 # -------------------------------
-# EVENTOS
+#* EVENTOS
 # -------------------------------
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
@@ -35,7 +35,7 @@ class EventoAdmin(admin.ModelAdmin):
 
 
 # -------------------------------
-# ASISTENCIA
+#* ASISTENCIA
 # -------------------------------
 @admin.register(Asistencia)
 class AsistenciaAdmin(admin.ModelAdmin):
@@ -61,7 +61,7 @@ class AsistenciaAdmin(admin.ModelAdmin):
     ordering = ('id_asistencia',)
 
 
-    # ----- Columnas personalizadas -----
+#* ----- Columnas personalizadas -----  en ves del "Evento object (X)"
 
     def evento_nombre(self, obj):
         return obj.evento.nombre_evento if obj.evento else '—'
