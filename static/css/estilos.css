@@ -2,10 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #000;
+    background-color: #000000;
     color: #fff;
 }
-/*TODO: maquetacion*/
+
 .parent {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -59,20 +59,28 @@ body {
 
 header {
     background: #000;
-    border-bottom: 3px solid #0ed5c8;
+    border-bottom: 1px solid #616161 ;
     padding: 50px 0;
-    text-align: center;
+    text-align:left;
+    
 }
-
 header h1 {
-    color: #02e8c5;
+    padding-left: 40px;
+    color: #40e0d0;        /**     #40e0d0     */
     font-size: 30px;
     margin: 0;
     letter-spacing: 2px;
 }
+
+.login{
+    border-bottom: 1px solid #616161 ;
+}
+
+
+
 nav {
     background-color: #111;
-    border-bottom: 3px solid #00e5d4;
+    border-bottom: 3px solid #40e0d0;
     padding: 10px;
     display: flex;
     justify-content: center; 
@@ -83,20 +91,15 @@ nav a {
     color: #fff;
     text-decoration: none;
     padding: 10px 20px;
-    border: 2px solid #00e5d4;
+    border: 2px solid #40e0d0 ;
     border-radius: 6px;
     transition: 0.3s;
     font-size: 16px;
     background: transparent;
 }
 nav a:hover {
-    background-color: #00e5d4;
-    color: #000;
+    background-color: #40e0d0 ;
+    color: #000000;
     transform: translateY(-3px);
 }
 
-
-
-
-        
-        

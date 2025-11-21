@@ -17,7 +17,25 @@
         <h1>VIDAS RADIANTES (ONG)</h1>
     </header>
     </div>
-    <div class="div2">2</div>
+    <div class="div2">
+    <div class="login">
+
+        {% if user.is_authenticated %}
+            <p>Bienvenido: <strong>{{ user.username }}</strong></p>
+                <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+</form>
+
+
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+
+        {% endif %}
+
+    </div>
+</div>
+
     <div class="div3">
     <nav>
         <a href="{% url 'listar_voluntarios' %}">Voluntarios</a><br>

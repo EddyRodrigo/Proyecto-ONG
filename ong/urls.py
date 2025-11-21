@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 from ong import views
 
 
@@ -30,4 +32,8 @@ urlpatterns = [
     path('asistencias/agregar/', views.guardar_asistencia, name='agregar_asistencia'),
     path('asistencias/editar/<int:id_asistencia>/', views.actualizar_asistencia, name='editar_asistencia'),
     path('asistencias/eliminar/<int:id_asistencia>/', views.eliminar_asistencia, name='eliminar_asistencia'),
+
+    
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 ]
