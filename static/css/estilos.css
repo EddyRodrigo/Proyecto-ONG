@@ -1,105 +1,310 @@
+/* ================================
+   TEMA PRO VERDE AGUA (Dashboard)
+================================== */
+
+/* GENERAL */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #000000;
-    color: #fff;
+    font-family: "Segoe UI", sans-serif;
+    background: #0b0c0d;
+    color: #e6e6e6;
 }
 
-.parent {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    gap: 8px;
-}
-    
-.div1 {
-    grid-column: span 3 / span 3;
-}
-
-.div2 {
-    grid-column: span 3 / span 3;
-    grid-column-start: 4;
-    grid-row-start: 1;
-}
-.div3 {
-    grid-column: span 6 / span 6;
-    grid-column-start: 1;
-    grid-row-start: 2;
-}
-
-.div4 {
-    grid-column: span 6 / span 6;
-    grid-row: span 3 / span 3;
-    grid-column-start: 1;
-    grid-row-start: 3;
-}
-
-.div5 {
-    grid-column: span 6 / span 6;
-    grid-row: span 3 / span 3;
-    grid-column-start: 1;
-    grid-row-start: 6;
-}
-
-.div6 {
-    grid-column: span 6 / span 6;
-    grid-row: span 2 / span 2;
-    grid-column-start: 1;
-    grid-row-start: 9;
-}
-
-.div7 {
-    grid-column: span 6 / span 6;
-    grid-row: span 2 / span 2;
-    grid-column-start: 1;
-    grid-row-start: 11;
-}
-/*TODO: Fin maquetacion*/
-
-header {
-    background: #000;
-    border-bottom: 1px solid #616161 ;
-    padding: 50px 0;
-    text-align:left;
-    
-}
-header h1 {
-    padding-left: 40px;
-    color: #40e0d0;        /**     #40e0d0     */
-    font-size: 30px;
-    margin: 0;
-    letter-spacing: 2px;
-}
-
-.login{
-    border-bottom: 1px solid #616161 ;
-}
-
-
-
-nav {
-    background-color: #111;
-    border-bottom: 3px solid #40e0d0;
-    padding: 10px;
+.layout {
     display: flex;
-    justify-content: center; 
-    gap: 15px;                
+    height: 100vh;
 }
 
-nav a {
-    color: #fff;
+/* ================================
+SIDEBAR
+================================== */
+.sidebar {
+    width: 260px;
+    background: #0f1113;
+    border-right: 2px solid #40e0d0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.sidebar a {
     text-decoration: none;
-    padding: 10px 20px;
-    border: 2px solid #40e0d0 ;
-    border-radius: 6px;
-    transition: 0.3s;
-    font-size: 16px;
-    background: transparent;
-}
-nav a:hover {
-    background-color: #40e0d0 ;
-    color: #000000;
-    transform: translateY(-3px);
 }
 
+.logo {
+    font-size: 28px;
+    color: #40e0d0;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(64,224,208,0.5);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    padding: 12px 15px;
+    font-size: 17px;
+    border: 2px solid #40e0d0;
+    border-radius: 8px;
+    color: #40e0d0;
+    transition: 0.25s;
+    text-align: center;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #40e0d0;
+    color: #000;
+    box-shadow: 0 0 15px rgba(64,224,208,0.6);
+}
+
+/* Footer sidebar */
+.sidebar-footer {
+    margin-top: auto;
+    font-size: 12px;
+    color: #40e0d0;
+    opacity: 0.8;
+}
+
+/* ================================
+MAIN CONTENT
+================================== */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+    height: 70px;
+    background: #111315;
+    border-bottom: 2px solid #40e0d0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+
+.topbar button {
+    padding: 8px 15px;
+    border: 2px solid #40e0d0;
+    background: transparent;
+    color: #40e0d0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.25s;
+}
+.topbar a {
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 2px solid #40e0d0;
+    background: transparent;
+    color: #40e0d0;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.25s;
+}
+.topbar a:hover {
+    background: #40e0d0;
+    color: #000;
+}
+
+.topbar button:hover {
+    background: #40e0d0;
+    color: #000;
+}
+
+.topbar-right {
+    margin-left: auto;   /* Empuja el enlace a la derecha */
+}
+
+/* CONTENIDO INTERNO */
+.content {
+    padding: 30px;
+}
+/* ===========================
+   TABLA ESTILO PRO VERDE AGUA
+=========================== */
+
+.tabla1 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: #0f1113;
+    border: 2px solid #40e0d0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(64,224,208,0.25);
+}
+
+.tabla1 thead {
+    background: #40e0d0;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tabla1 thead th {
+    padding: 14px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.tabla1 tbody tr {
+    transition: 0.2s;
+}
+
+.tabla1 tbody tr:nth-child(even) {
+    background: #131619;
+}
+
+.tabla1 tbody tr:nth-child(odd) {
+    background: #0f1113;
+}
+
+.tabla1 tbody tr:hover {
+    background: #1d2426;
+    cursor: pointer;
+}
+
+.tabla1 td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(64,224,208,0.2);
+    font-size: 15px;
+    color: #e6e6e6;
+}
+
+/* Acciones */
+.tabla1 td a {
+    text-decoration: none;
+    padding: 6px 10px;
+    border: 1px solid #40e0d0;
+    color: #40e0d0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.25s;
+    margin-right: 4px;
+}
+
+.tabla1 td a:hover {
+    background: #40e0d0;
+    color: #000;
+    box-shadow: 0 0 10px rgba(64,224,208,0.6);
+}
+
+.subtitulo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.subtitulo .agregar{
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 2px solid #40e0d0;
+    background: transparent;
+    color: #40e0d0;
+    border-radius: 8px;
+    transition: 0.25s;
+}
+.subtitulo .agregar:hover {
+    background: #40e0d0;
+    color: #000;
+    box-shadow: 0 0 15px rgba(64,224,208,0.6);
+}
+div .NoPermiso{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 50px;
+}
+div .NoPermiso a{
+    color: #40e0d0;
+    text-decoration: none;
+}
+div .NoPermiso a:hover{
+    background: #40e0d0;
+    color: #000;
+    border-radius: 5px;
+    padding: 4px 5px;
+}
+/** =====================================
+/**   FORMULARIO PRO VERDE AGUA (formulario1)
+/** ===================================== */
+.formulario1{
+    width: 350px;
+    border: solid 2px #40e0d0;   
+    padding: 30px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 15px;
+    background-color: #000000;
+    text-align: center;
+}
+.formulario1 input{
+    background: black;
+    color: white;
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: solid 1px #40e0d0;
+    border-radius: 5px;
+}
+.formulario1 select{
+    background: black;
+    color: white;
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: solid 1px white;
+    border-radius: 5px;
+}
+.formulario1 textarea{
+    background: black;
+    color: white;
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: solid 1px #40e0d0;
+    border-radius: 5px;
+    resize: vertical;
+}
+.formulario1 .guardar{
+    background-color: #000000;
+    border: solid 1px #40e0d0;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.formulario1 .guardar:hover {
+    background-color: #40e0d0;
+    color: rgb(0, 0, 0);
+}
+.formulario1 .cancelar{
+    background-color: #000000;
+    border: solid 1px #b30000;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.formulario1 .cancelar a{
+    text-decoration: none;
+    color: white;
+}
+
+.formulario1 .cancelar:hover {
+    background-color: #b30000;
+    color: white;
+}

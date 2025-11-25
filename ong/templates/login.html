@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Ingresar</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-</head>
-<body>
+{%extends 'base.html'%}
+
+{% block title %}VIDAS RADIANTES{% endblock title %}
+
+{%block content%}
 
 <h2>Iniciar Sesión</h2>
 
-<form method="POST">
+<form method="POST" class="formulario1">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Entrar</button>
+    <button type="submit" class="guardar">Entrar</button>
 </form>
 
-
-</body>
-</html>
+{%endblock%}

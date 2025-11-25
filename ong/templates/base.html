@@ -1,56 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}Titulo Base{% endblock %}</title>
+    <title>{% block title %}Vidas Radiantes{% endblock %}</title>
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-    
+
 </head>
 <body>
-<div class="parent">
-    <div class="div1">
-    <header>
-        <h1>VIDAS RADIANTES (ONG)</h1>
-    </header>
-    </div>
-    <div class="div2">
-    <div class="login">
+<div class="layout">
 
-        {% if user.is_authenticated %}
-            <p>Bienvenido: <strong>{{ user.username }}</strong></p>
+    <!-- SIDEBAR IZQUIERDO -->
+    <aside class="sidebar">
+        <a href="{% url 'home' %}"><h2 class="logo">VIDAS<br> RADIANTES<br> (ONG)</h2></a>
+        <nav class="menu">
+            {% if user.is_authenticated %}
+            <a href="{% url 'listar_voluntarios' %}">Voluntarios</a>
+            <a href="{% url 'listar_eventos' %}">Eventos</a>
+            <a href="{% url 'listar_inscritos' %}">Inscritos</a>
+            <a href="{% url 'listar_asistencias' %}">Asistencias</a>
+            {% endif %}
+
+            <a href="">A</a>
+            <a href="">B</a>
+            <a href="">C</a>
+            <a href="">D</a>
+
+        </nav>
+        <footer class="sidebar-footer">
+            © 2025 Vidas Radiantes — Todos los derechos reservados.
+        </footer>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- BARRA SUPERIOR -->
+        <header class="topbar">
+            {% if user.is_authenticated %}
+                <p>Usuario: <strong>{{ user.username }}</strong></p>
                 <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Cerrar sesión</button>
                 </form>
+            {% else %}
+                <div class="topbar-right">
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                </div>
+            {% endif %}
+        </header>
 
+        <!-- CONTENIDO DE CADA PÁGINA -->
+        <section class="content">
+            {% block content %}
+            {% endblock %}
+        </section>
 
-        {% else %}
-            <a href="{% url 'login' %}">Iniciar sesión</a>
-
-        {% endif %}
-
-    </div>
-</div>
-
-    <div class="div3">
-    <nav>
-        <a href="{% url 'listar_voluntarios' %}">Voluntarios</a><br>
-        <a href="{% url 'listar_eventos' %}">Eventos</a><br>
-        <a href="{% url 'listar_inscritos' %}">Inscritos</a><br>
-        <a href="{% url 'listar_asistencias' %}">Asistencias</a><br>
-    </nav>
-    </div>
-    <div class="div4">
-        {% block content %}
-        {% endblock content %}
-    </div>
-    <div class="div5">5</div>
-    <div class="div6">6</div>
-    <div class="div7">7</div>
+    </main>
 </div>
 </body>
+
 </html>

@@ -1,36 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Voluntario</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
 
-<div class="container mt-4">
+
+
+{%extends 'base.html'%}
+
+{% block title %}ACTUALIZAR VOLUNTARIO{% endblock title %}
+
+{%block content%}
+{% if user.is_superuser %}
+<div>
     <h2>Editar Voluntario</h2>
 
-    <form method="POST" class="card p-4">
+    <form method="POST"  class="formulario1">
         {% csrf_token %}
 
         <label>Nombre</label>
-        <input type="text" name="nombre" value="{{ voluntario.nombre }}" class="form-control mb-2">
+        <input type="text" name="nombre" value="{{ voluntario.nombre }}" >
 
         <label>Apellido</label>
-        <input type="text" name="apellido" value="{{ voluntario.apellido }}" class="form-control mb-2">
+        <input type="text" name="apellido" value="{{ voluntario.apellido }}" >
 
         <label>Rol</label>
-        <input type="text" name="rol" value="{{ voluntario.rol }}" class="form-control mb-2">
+        <input type="text" name="rol" value="{{ voluntario.rol }}">
 
         <label>CI</label>
-        <input type="text" name="ci" value="{{ voluntario.ci }}" class="form-control mb-2">
+        <input type="text" name="ci" value="{{ voluntario.ci }}" >
 
         <label>Correo</label>
-        <input type="email" name="correo" value="{{ voluntario.correo }}" class="form-control mb-3">
+        <input type="email" name="correo" value="{{ voluntario.correo }}" >
 
-        <button class="btn btn-warning">Actualizar</button>
-        <a href="{% url 'listar_voluntarios' %}" class="btn btn-secondary">Volver</a>
+        <button class="guardar">Actualizar</button>
+        <button class="cancelar"><a href="{% url 'listar_voluntarios' %}" >Volver</a></button>
     </form>
 </div>
-
-</body>
-</html>
+{% else %}
+    <p class="NoPermiso">No tienes permiso para actualizar voluntarios.</p>
+{% endif %}
+{%endblock%}

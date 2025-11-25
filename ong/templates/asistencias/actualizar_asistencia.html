@@ -1,19 +1,18 @@
-<<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Asistencia</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
+{%extends 'base.html'%}
 
-<body>
-<div class="container mt-4">
+{% block title %}VIDAS RADIANTES{% endblock title %}
+
+{%block content%}
+{% if user.is_superuser %}
+<div>
+
     <h2>Editar Asistencia</h2>
 
-    <form method="POST" class="card p-4">
+    <form method="POST" class="formulario1">
         {% csrf_token %}
 
         <label>Evento</label>
-        <select name="evento" class="form-control mb-2" required>
+        <select name="evento" required>
             {% for e in eventos %}
                 <option value="{{ e.id_evento }}" {% if asistencia.evento.id_evento == e.id_evento %}selected{% endif %}>
                     {{ e.nombre_evento }}
@@ -22,7 +21,7 @@
         </select>
 
         <label>Voluntario</label>
-        <select name="voluntario" class="form-control mb-2">
+        <select name="voluntario">
             <option value="">Ninguno</option>
             {% for v in voluntarios %}
                 <option value="{{ v.id_voluntario }}" {% if asistencia.voluntario and asistencia.voluntario.id_voluntario == v.id_voluntario %}selected{% endif %}>
@@ -32,7 +31,7 @@
         </select>
 
         <label>Inscrito</label>
-        <select name="inscrito" class="form-control mb-2">
+        <select name="inscrito">
             <option value="">Ninguno</option>
             {% for i in inscritos %}
                 <option value="{{ i.id_inscrito }}" {% if asistencia.inscrito and asistencia.inscrito.id_inscrito == i.id_inscrito %}selected{% endif %}>
@@ -42,15 +41,16 @@
         </select>
 
         <label>Hora de llegada</label>
-        <input type="datetime-local" name="hora_llegada" value="{{ asistencia.hora_llegada|date:'Y-m-d\\TH:i' }}" class="form-control mb-2">
+        <input type="datetime-local" name="hora_llegada" value="{{ asistencia.hora_llegada|date:'Y-m-d\\TH:i' }}">
 
         <label>Hora de salida</label>
-        <input type="datetime-local" name="hora_salida" value="{{ asistencia.hora_salida|date:'Y-m-d\\TH:i' }}" class="form-control mb-3">
+        <input type="datetime-local" name="hora_salida" value="{{ asistencia.hora_salida|date:'Y-m-d\\TH:i' }}">
 
-        <button class="btn btn-warning">Actualizar</button>
-        <a href="{% url 'listar_asistencias' %}" class="btn btn-secondary">Volver</a>
+        <button class="guardar">Actualizar</button>
+        <button class="cancelar"><a href="{% url 'listar_asistencias' %}">Volver</a></button>
     </form>
-</div>
-</body>
-</html>
-
+</div> 
+{% else %}
+    <p class="NoPermiso">No tienes permiso para actualizar asistencias.</p>
+{% endif %}
+{%endblock%}

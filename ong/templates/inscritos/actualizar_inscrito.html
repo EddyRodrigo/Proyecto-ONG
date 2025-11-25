@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Inscrito</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
+{%extends 'base.html'%}
 
-<body>
-<div class="container mt-4">
+{% block title %}VIDAS RADIANTES{% endblock title %}
+
+{%block content%}
+{% if user.is_superuser %}
+<div>
     <h2>Editar Inscrito</h2>
 
-    <form method="POST" class="card p-4">
+    <form method="POST" class="formulario1">
         {% csrf_token %}
 
         <label>Nombre</label>
-        <input type="text" name="nombre" value="{{ inscrito.nombre }}" class="form-control mb-2">
+        <input type="text" name="nombre" value="{{ inscrito.nombre }}">
 
         <label>Apellido</label>
-        <input type="text" name="apellido" value="{{ inscrito.apellido }}" class="form-control mb-2">
+        <input type="text" name="apellido" value="{{ inscrito.apellido }}">
 
         <label>CI</label>
-        <input type="text" name="ci" value="{{ inscrito.ci }}" class="form-control mb-2">
+        <input type="text" name="ci" value="{{ inscrito.ci }}">
 
         <label>Fecha de nacimiento</label>
-        <input type="date" name="fecha_nacimiento" value="{{ inscrito.fecha_nacimiento }}" class="form-control mb-3">
+        <input type="date" name="fecha_nacimiento" value="{{ inscrito.fecha_nacimiento }}">
 
-        <button class="btn btn-warning">Actualizar</button>
-        <a href="{% url 'listar_inscritos' %}" class="btn btn-secondary">Volver</a>
+        <button class="guardar">Actualizar</button>
+        <button class="cancelar"><a href="{% url 'listar_inscritos' %}">Volver</a></button>
     </form>
 </div>
-</body>
-</html>
+{% else %}
+    <p class="NoPermiso">No tienes permiso para actualizar inscritos.</p>
+{% endif %}
+{%endblock%}
